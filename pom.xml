@@ -121,7 +121,7 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-                            <mainClass>com.gb.soa.sequence.SequenceMain</mainClass>
+                            <mainClass>com.gb.soa.basic.components.BasicComponentsMain</mainClass>
                         </configuration>
                     </execution>
                 </executions>
