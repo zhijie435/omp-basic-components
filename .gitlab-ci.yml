@@ -1,0 +1,41 @@
+image: harbor01.yiako.com/tools/docker:latest
+cache:
+  key: $CI_BUILD_REF
+  paths:
+    - target/*.tar.gz
+    - target/*.jar
+
+stages:
+  - package
+  - docker_build
+  - deploy
+
+mvn_build_job:
+  image: harbor01.yiako.com/tools/maven:3.3.9-jdk-8-alpine
+
+  stage: package
+  tags:
+    - k8s
+  script:
+    - /data/build/saas-dev/mvn-build.sh $CI_PROJECT_NAMESPACE ${CI_PROJECT_NAME} ${CI_COMMIT_REF_NAME} ${CI_BUILD_REF}
+
+
+docker_build_job:
+
+  stage: docker_build
+  tags:
+    - k8s
+  script:
+    #    - sleep 300
+    - /data/build/saas-dev/docker-build.sh $CI_PROJECT_NAMESPACE ${CI_PROJECT_NAME} ${CI_COMMIT_REF_NAME} ${CI_BUILD_REF}
+
+docker_deploy_job:
+  cache: {}
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+  tags:
+    - k8s
+  script:
+    #    - sleep 300
+    - /data/build/saas-dev/docker-deploy.sh $CI_PROJECT_NAMESPACE ${CI_PROJECT_NAME} ${CI_COMMIT_REF_NAME} ${CI_BUILD_REF}

@@ -1,0 +1,28 @@
+server:
+  port: 10933
+spring:
+  cloud:
+    nacos:
+      server-addr: nacos.standard-erp-${spring.profiles.active}:8848
+      config:
+        namespace: standard-erp-${spring.profiles.active}
+        file-extension: yml
+        extension-configs:
+          - { data-id: env-config.yml,group: DEFAULT_GROUP,refresh: true }
+          - { data-id: sequence-time.yml,group: DEFAULT_GROUP,refresh: true }
+      discovery:
+        namespace: standard-erp-${spring.profiles.active}
+        service: basic-components
+
+  main:
+    banner-mode: "off"
+    allow-bean-definition-overriding: true
+  application:
+    name: basic-components
+  profiles:
+    active: prod
+dubbo:
+  cloud:
+    subscribed-services:
+  protocol:
+    port: 30933
