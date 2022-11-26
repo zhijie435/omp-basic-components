@@ -21,12 +21,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.*;
 
 
 @Service("sequenceActionService")
+@RestController
 public class SequenceActionServiceImpl implements SequenceActionService  {
 
 	@Resource
@@ -64,7 +66,7 @@ public class SequenceActionServiceImpl implements SequenceActionService  {
 		// =======添加到数据库, 判断数据库中是否存在
 		if (getCountBy(systemName, seqName)) {
 			CreateSequence createSequence = new CreateSequence();
-			long series = new Date().getTime();
+			long series = System.currentTimeMillis();
 			createSequence.setSeries(series);
 			createSequence.setSeqProject(systemName);
 			createSequence.setSeqName(seqName);
