@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.gb.soa</groupId>
         <artifactId>omp_cparent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>2.0-SNAPSHOT</version>
     </parent>
     <artifactId>omp-basic-components</artifactId>
     <packaging>jar</packaging>
@@ -14,8 +14,8 @@
         <dependency>
             <groupId>com.gb.soa</groupId>
             <artifactId>omp-basic-components-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
