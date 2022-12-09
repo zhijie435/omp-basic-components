@@ -28,7 +28,6 @@ import java.util.List;
 @Component
 public class UpdateSequenceTime {
 
-
 	@Autowired
 	NacosConfigManager nacosConfigManager;
 
