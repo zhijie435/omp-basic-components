@@ -271,9 +271,6 @@ public class CacheStoreServiceImpl implements CacheStoreService {
 
 		}
 
-
-
-
 		//异步处理流水表
 		String dubboGroup = getCurrentThreadDubboGroup();
 		Constant.tExecutor.execute(new Runnable() {

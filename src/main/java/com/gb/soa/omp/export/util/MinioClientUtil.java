@@ -51,7 +51,6 @@ public class MinioClientUtil {
 		JSONObject res = new JSONObject();
 		res.put("code", -1);
 		try {
-
 			//获取 MinioClient
 			MinioClient minioClient = MinioClient.builder()
 					.endpoint(endpoint)

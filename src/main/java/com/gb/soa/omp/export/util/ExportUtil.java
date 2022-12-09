@@ -25,7 +25,6 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 /**
- * TODO（描述类的职责）
  * @author cjw
  * @date 2017年4月11日 下午3:41:13
  * @version <b>1.0.0</b>
@@ -34,18 +33,9 @@ public class ExportUtil {
 
 	public static final String SUB_SYSTEM = "cexport";
 
-
-//	public static Map<String,EXPORT_TENANT_TASK> tenantTaskMap = new ConcurrentHashMap<String,EXPORT_TENANT_TASK>();
-
-//	public static Map<String,JSONObject> configJsonMap = new ConcurrentHashMap<String,JSONObject>();
-
 	public static String sqlHandler(String sqlValue,
 			List<Map<String, Object>> returnParamMap, CommonQuery gq,
 			JSONArray paramsJsonArray) {
-
-		// sqlValue = unnecessaryParamAssembly(sqlValue, paramMapList);
-		// sqlValue = pagingAssembly(sqlValue, gq);
-		// sqlValue = parsingTheKeyword(sqlValue, paramsJsonArray);
 		return sqlValue;
 	}
 
@@ -223,7 +213,6 @@ public class ExportUtil {
 	 * 判断是否为数
 	 */
 	public static boolean isNumeric(String str) {
-
 		Pattern pattern = Pattern.compile("[0-9]*");
 		return pattern.matcher(str).matches();
 	}
@@ -286,26 +275,4 @@ public class ExportUtil {
 		}
 	}
 
-
-	//Base64加密
-	public  static String getEncodeBase64(String s) {
-		if (s == null) {
-			return null;
-		}
-		try {
-			return new String(new Base64().encode(s.getBytes()),"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	public static String changeDataSource(Long dataSign){
-		if (dataSign.equals(1L)) {
-			return "omsDataSource";
-		}
-		else if(dataSign.equals(0L)){
-			return "omsProductionDataSource";
-		}
-		return null;
-	}
 }

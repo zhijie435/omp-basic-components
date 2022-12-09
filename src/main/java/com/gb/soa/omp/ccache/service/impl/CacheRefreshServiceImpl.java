@@ -42,7 +42,6 @@ import java.util.concurrent.TimeUnit;
 public class CacheRefreshServiceImpl implements CacheRefreshService {
     private final static Logger log = LoggerFactory.getLogger(CacheRefreshServiceImpl.class);
     private static JsonMapper mapper;
-    private static JsonMapper mapperCache = JsonMapper.nonDefaultMapper();
 
     static {
         mapper = JsonMapper.nonEmptyMapper();
@@ -51,9 +50,6 @@ public class CacheRefreshServiceImpl implements CacheRefreshService {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
-
-    @Resource
-    private CacheCommonService cacheCommonService;
 
     @Resource
     private EcCacheMethodSchemaDefineDao ecCacheMethodSchemaDefineDao;

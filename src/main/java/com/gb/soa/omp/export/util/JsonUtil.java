@@ -19,7 +19,6 @@ import net.sf.json.xml.XMLSerializer;
 
 /**
  *
- * TODO JsonUtil
  *
  * @author qiang.li
  * @class com.gb.soa.omp.billsync.util.JsonUtil
@@ -66,7 +65,6 @@ public class JsonUtil {
 	}
 
 	public static Map<String, Object> parseJSON2LinkedMap(String jsonStr) {
-
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		// 最外层解析
 		JSONObject json = JSONObject.fromObject(jsonStr);
@@ -109,7 +107,6 @@ public class JsonUtil {
 	}
 
 	public static Map<String, Object> getMapByUrl(String url) {
-
 		try {
 			// 通过HTTP获取JSON数据
 			InputStream in = new URL(url).openStream();
@@ -135,23 +132,13 @@ public class JsonUtil {
 
 	/**
 	 * JSON(数组)字符串<STRONG>转换</STRONG>成XML字符串
-	 * 
+	 *
 	 * @param jsonString
 	 * @return
 	 */
 	public static String json2xml(String jsonString) {
 		XMLSerializer xmlSerializer = new XMLSerializer();
 		return xmlSerializer.write(JSONSerializer.toJSON(jsonString));
-		// return
-		// xmlSerializer.write(JSONArray.fromObject(jsonString));//这种方式只支持JSON数组
-	}
-
-	// test
-	public static void main(String[] args) {
-
-		String url = "http://...";
-		List<Map<String, Object>> list = getListByUrl(url);
-		System.out.println(list);
 	}
 
 }
