@@ -23,13 +23,16 @@ import com.gb.soa.omp.export.dao.ExArcDocSystemDao;
 import com.gb.soa.omp.export.service.CommonJsonQueryService;
 import com.gb.soa.omp.export.util.ExportUtil;
 import com.gb.soa.sequence.util.SeqGetUtil;
+import com.ykcloud.soa.mapping.GatewayMapping;
 import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -44,6 +47,9 @@ import java.util.Map;
  * @version <b>1.0.0</b>
  */
 @Service("exportDataService")
+@FeignClient(value = "@Value(\"${spring.application.name}\")")
+@RestController
+@GatewayMapping
 public class ExportDataServiceImpl implements ExportDataService {
 	private static final Logger log = LoggerFactory
 			.getLogger(ExportDataServiceImpl.class);
