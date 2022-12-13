@@ -28,12 +28,14 @@ import com.gb.soa.omp.ccommon.api.exception.ExceptionType;
 import com.gb.soa.omp.ccommon.api.exception.ValidateBusinessException;
 import com.gb.soa.omp.ccommon.api.exception.ValidateClientException;
 import com.gb.soa.omp.ccommon.util.*;
+import com.ykcloud.soa.mapping.GatewayMapping;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.rpc.RpcContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -47,7 +49,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service("cacheStoreService")
+@FeignClient(value = "@Value(\"${spring.application.name}\")")
 @RestController
+@GatewayMapping
 public class CacheStoreServiceImpl implements CacheStoreService {
 	private final static Logger log = LoggerFactory.getLogger(CacheStoreServiceImpl.class);
 	private static JsonMapper mapper;

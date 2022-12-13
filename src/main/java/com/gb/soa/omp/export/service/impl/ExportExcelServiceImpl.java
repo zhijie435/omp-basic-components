@@ -31,6 +31,7 @@ import com.gb.soa.omp.export.service.model.MatchesInfoAndKeyValue;
 import com.gb.soa.omp.export.util.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ykcloud.soa.mapping.GatewayMapping;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.csv.CSVFormat;
@@ -41,11 +42,13 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.io.FileOutputStream;
@@ -58,6 +61,9 @@ import java.util.stream.Collectors;
  *
  */
 @Service("exportExcelService")
+@FeignClient(value = "@Value(\"${spring.application.name}\")")
+@RestController
+@GatewayMapping
 public class ExportExcelServiceImpl implements ExportExcelService {
 
     private static final Logger log = LoggerFactory.getLogger(ExportDataServiceImpl.class);

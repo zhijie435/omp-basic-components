@@ -22,10 +22,12 @@ import com.gb.soa.omp.ccommon.util.JsonMapper;
 import com.gb.soa.omp.ccommon.util.TransactionUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.ykcloud.soa.mapping.GatewayMapping;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -38,7 +40,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @Service("cacheRefreshService")
+@GatewayMapping
 @RestController
+@FeignClient(value = "@Value(\"${spring.application.name}\")")
 public class CacheRefreshServiceImpl implements CacheRefreshService {
     private final static Logger log = LoggerFactory.getLogger(CacheRefreshServiceImpl.class);
     private static JsonMapper mapper;

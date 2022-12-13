@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient("basic-components")
 public interface SequenceActionService {
 	/**
 	 * 创建序列号 ：前缀+时间+num+val 组成（98 171109 0091 719）

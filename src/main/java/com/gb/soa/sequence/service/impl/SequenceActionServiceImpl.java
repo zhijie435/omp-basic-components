@@ -13,9 +13,11 @@ import com.gb.soa.sequence.service.SequenceActionService;
 import com.gb.soa.sequence.service.SequenceTimeService;
 import com.gb.soa.sequence.util.Constant;
 import com.gb.soa.sequence.util.DateUtils;
+import com.ykcloud.soa.mapping.GatewayMapping;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +28,9 @@ import java.util.*;
 
 
 @Service("sequenceActionService")
+@FeignClient(value = "@Value(\"${spring.application.name}\")")
 @RestController
+@GatewayMapping
 public class SequenceActionServiceImpl implements SequenceActionService {
 
     @Resource

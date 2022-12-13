@@ -12,8 +12,6 @@ spring:
           - { data-id: sequence-time.yml,group: DEFAULT_GROUP,refresh: true }
       discovery:
         namespace: standard-erp-${spring.profiles.active}
-        service: basic-components
-
   main:
     banner-mode: "off"
     allow-bean-definition-overriding: true
