@@ -1,1 +1,11 @@
-/target/
+.idea
+*.iml
+out
+gen
+.settings/
+target/
+.classpath
+.project
+
+
+/.factorypath
