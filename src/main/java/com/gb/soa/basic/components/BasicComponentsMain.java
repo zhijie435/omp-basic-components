@@ -18,7 +18,7 @@ import java.beans.Introspector;
 @Configuration
 @EnableDiscoveryClient
 @EnableAutoConfiguration
-@ComponentScan(basePackages = {"com.gb.soa.omp.ccache", "com.gb.soa.sequence", "com.gb.soa.omp.export", "com.gb.soa.basic.config"})
+@ComponentScan(basePackages = {"com.gb.soa.omp.ccache", "com.gb.soa.sequence", "com.gb.soa.omp.export", "com.gb.soa.basic.config","com.ykcloud.soa.mapping"})
 public class BasicComponentsMain {
     public static void main(String[] args) {
         new SpringApplicationBuilder(BasicComponentsMain.class).beanNameGenerator(new CustomGenerator()).run(args);

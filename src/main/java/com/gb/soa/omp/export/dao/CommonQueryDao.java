@@ -41,7 +41,7 @@ public class CommonQueryDao {
 	public static final String SELECT_GENERICQUERY_BY_SQLID_NO_TENANT = "SELECT series, sql_name AS sqlName, sql_id AS sqlId, sql_content AS sqlContent, param_content AS paramContent, jdbc_name AS jdbcName, create_user_id AS createUserId, 'N' as cancelSign, tenant_num_id AS tenantNumId, data_sign AS dataSign, db_type AS dbType,annotate_prefix AS annotatePrefix,sub_sql_id,no_data_exception,cache_sign,method_name,cache_live_time,return_handle_content FROM common_query WHERE sql_id = ?  and data_sign = ?";
 
 	// 通用SQL
-	public static final String SELECT_GENERICQUERY_BY_SQLID_WITH_TENANT = "SELECT series, sql_name AS sqlName, sql_id AS sqlId, sql_content AS sqlContent, param_content AS paramContent, jdbc_name AS jdbcName, create_user_id AS createUserId, 'N' as cancelSign, tenant_num_id AS tenantNumId, data_sign AS dataSign, db_type AS dbType,annotate_prefix AS annotatePrefix,sub_sql_id,no_data_exception,cache_sign,method_name,cache_live_time,excel_column FROM common_query WHERE sql_id = ? and tenant_num_id = ? and data_sign = ?";
+	public static final String SELECT_GENERICQUERY_BY_SQLID_WITH_TENANT = "SELECT series, sql_name AS sqlName, sql_id AS sqlId, sql_content AS sqlContent, param_content AS paramContent, jdbc_name AS jdbcName, create_user_id AS createUserId, 'N' as cancelSign, tenant_num_id AS tenantNumId, data_sign AS dataSign, db_type AS dbType,annotate_prefix AS annotatePrefix,sub_sql_id,no_data_exception,cache_sign,method_name,cache_live_time FROM common_query WHERE sql_id = ? and tenant_num_id = ? and data_sign = ?";
 
 	public CommonQuery getModelWithTenant(String sqlId, Long tenantNumId, Long dataSign) {
 		DataSourceContextHolder.clearDataSourceType();

@@ -28,9 +28,9 @@ import java.util.*;
 
 
 @Service("sequenceActionService")
-@FeignClient(value = "@Value(\"${spring.application.name}\")")
-@RestController
-@GatewayMapping
+//@FeignClient(value = "@Value(\"${spring.application.name}\")")
+//@RestController
+//@GatewayMapping
 public class SequenceActionServiceImpl implements SequenceActionService {
 
     @Resource
