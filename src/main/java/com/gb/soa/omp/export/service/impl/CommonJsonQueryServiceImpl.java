@@ -55,10 +55,8 @@ public class CommonJsonQueryServiceImpl implements CommonJsonQueryService {
 
 	private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-//	public ExcuteSqlResultModel excuteSqlById(Long currentPage,String dataSourceName,CommonQuery commonQuery,JSONObject inputParam,Long tenantNumId, Long dataSign ){
 	public ExcuteSqlResultModel excuteSqlById(Long currentPage,String dataSourceName,CommonQuery commonQuery,Map<String,Object> inputParam,Long tenantNumId, Long dataSign ){
 
-	//		long start = System.currentTimeMillis();
 		if (StringUtil.isNullOrBlankTrim(dataSourceName)) {
 			dataSourceName = commonQuery.getJdbcName();
 		}
@@ -69,7 +67,6 @@ public class CommonJsonQueryServiceImpl implements CommonJsonQueryService {
 		List<Map<String,Object>> list=null;
 		if (commonQuery.getCacheSign().equals(2L)) {
 			list=new ArrayList<Map<String,Object>>();
-			//JSONObject jsResult = CacheUtil.getCache(commonQuery.getDataSign(), commonQuery.getMethodName(), CamelUnderlineUtil.underlineToCamel(gson.toJson(inputParam)),JSONObject.class, true);
 			Map<String,Object> jsResult = CacheUtil.getCache(commonQuery.getDataSign(), commonQuery.getMethodName(), CamelUnderlineUtil.underlineToCamel(gson.toJson(inputParam)),Map.class, true);
 			list.add(jsResult);
 			resModel.setData(list);
@@ -201,22 +198,6 @@ public class CommonJsonQueryServiceImpl implements CommonJsonQueryService {
 					list=mapper.fromJson(reult, List.class);
 				}
 			}
-//			else if(commonQuery.getCacheSign().equals(2L)){//调用缓存服务
-//				list=new ArrayList();
-//				JSONObject json=new JSONObject();
-//				for (String str : map.keySet()) {
-//					if (str.equals("tenant_num_id")) {
-//						json.put(str, commonQuery.getTenantNumId());
-//					}
-//					else if (str.equals("data_sign")) {
-//						json.put(str, commonQuery.getDataSign());
-//					}else{
-//						json.put(str, map.get(str));
-//					}
-//				}
-//				log.info(CamelUnderlineUtil.underlineToCamel(gson.toJson(json)));
-//				JSONObject jsResult = CacheUtil.getCache(commonQuery.getDataSign(), commonQuery.getMethodName(), CamelUnderlineUtil.underlineToCamel(gson.toJson(json)),JSONObject.class, true);
-//				list.add(jsResult);
 			else{
 				try {
 					list = dynamicJdbcTemplate.queryForList(sqlContent, arr);
@@ -229,16 +210,6 @@ public class CommonJsonQueryServiceImpl implements CommonJsonQueryService {
 			throw new DatabaseOperateException(ExportUtil.SUB_SYSTEM, ExceptionType.DOE30051,
 					"sqlId为" + commonQuery.getSqlId() + "执行sql语句异常"+e.getMessage()+ "," + "入参为:" + JSONArray.fromObject(arr).toString());
 		}
-		/*
-		if(!list.isEmpty()){
-
-			JSONArray jary = JSONArray.fromObject(list, JsonObjectUtil.getJsonConfig());
-			String json = jary.toString().replace(":null", ":\"\"");
-			jary  = JSONArray.fromObject(json);
-			list.clear();
-			list =  (List) JSONArray.toCollection(jary,JSONObject.class);
-		}
-		*/
 		if (list.isEmpty()&&commonQuery.getSubQuerySign().equals(2L)) {
 			Map<String,Object> mapForEmptResult = null;
 			for (int i = 0; i < strArr.length; i++) {
@@ -310,8 +281,7 @@ public class CommonJsonQueryServiceImpl implements CommonJsonQueryService {
 			sql=sql+"D.series in(select ITEMID from unitepos.abc)";
 			sql="select (select b.id from  unitepos.abc b where b.itemid=a.series) ZT_RESERVED_NO, a.* from ("+
 					sql+") a ";
-//			String sql=commonQuery.getSqlContent().substring(point);
-//			sql=sql+"D.series in(:seriesList)";
+
 			DataSourceContextHolder.clearDataSourceType();
 			DataSourceContextHolder.setDataSourceType(dataSourceName);
 			List list = dynamicJdbcTemplate.queryForList(sql);
@@ -324,154 +294,6 @@ public class CommonJsonQueryServiceImpl implements CommonJsonQueryService {
 		List<Long> seriesList=dynamicJdbcTemplate.queryForList("select ITEMID from unitepos.abc",Long.class);
 		return seriesList;
 	}
-//	/**
-//	 *
-//	 * @author zhiyu.long
-//	 * @date 2017年11月22日 下午1:31:08
-//	 * @see com.gb.soa.omp.export.service.CommonJsonQueryService#excuteSqlById(java.lang.String, com.gb.soa.omp.exchange.model.CommonQuery, net.sf.json.JSONArray, java.lang.Long, java.lang.Long)
-//	 * @param dataSourceName
-//	 * @param commonQuery
-//	 * @param inputParam
-//	 * @param tenantNumId
-//	 * @param dataSign
-//	 * @return
-//	 */
-//	@Override
-//	public void excuteSqlByIdForUpdate(String dataSourceName, CommonQuery commonQuery,
-//			List<Map<String,Object>> list, Long tenantNumId, Long dataSign) {
-//		DataSourceContextHolder.clearDataSourceType();
-//		DataSourceContextHolder.setDataSourceType(dataSourceName);
-//		String sql="INSERT INTO WM_BL_SHIP_DTL"+
-//					"	(SERIES,"+
-//					"		TENANT_NUM_ID,"+
-//					"		RESERVED_NO,"+
-//					"		STK_NUM_ID,"+
-//					"		DIV_NUM_ID,"+
-//					"		BUD_NUM_ID,"+
-//					"		SO_NUM_ID,"+
-//					"		ITEM_NUM_ID,"+
-//					"		QTY,"+
-//					"		PICK_RESERVED_NO,"+
-//					"		PICK_TASK_NUM_ID,"+
-//					"		TRAY_SERLNO,"+
-//					"		ORDER_LINE,"+
-//					"		PTY_INDEX_NUM_ID,"+
-//					"		CREATE_USER_ID,"+
-//					"		LAST_UPDATE_USER_ID,"+
-//					"		CANCELSIGN,"+
-//					"		INSERTDATA,"+
-//					"		UPDATEDATA,"+
-//					"		STK_CORT_NUM_ID,"+
-//					"		CONTAINER_SERLNO,"+
-//					"	PICK_LINE_ID,"+
-//					"		LOC_NUM_ID,"+
-//					"		LOC_PTY_NUM_ID,"+
-//					"		PTY_INDEX_NUM_ID1,"+
-//					"		BACKQTY,"+
-//					"		VIRTUAL_FACT_QTY,"+
-//					"		EXPORT_TO_BRANCH,"+
-//					"		EXPORT_TO_BRANCH_BILL,"+
-//					"		TML_LINE,"+
-//					"		TML_NUM_ID,"+
-//					"		EXPORT_TO_DRP,"+
-//					"		DRP_BILLID,"+
-//					"		STORAGE_NUM_ID,"+
-//					"		DIFF_QTY,"+
-//					"		SOURCE_LINE,"+
-//					"		TRADE_PRICE,"+
-//					"		ASN_LINE,"+
-//					"		DATA_SIGN,"+
-//					"		CREATE_DTME,"+
-//					"		LAST_UPDTME)"+
-//					"		VALUES"+
-//					"		(?,"+
-//					"		1,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		(SELECT H.CONTAINER_SERLNO FROM WM_BL_SHIP_CONTAINER_HDR H WHERE H.OMS_CONTAINER_SERLNO = ? and h.tenant_num_id=1 and h.data_sign=0),"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"		?,"+
-//					"	 ?,"+
-//					"	 ?,"+
-//					"	 ?,"+
-//					"	 ?,"+
-//					"	 ?,"+
-//					"	 ?,"+
-//					"	 ?,"+
-//					"	 ?,"+
-//					"	 ?,"+
-//					"		1,"+
-//					"		sysdate(),"+
-//					"		sysdate())";
-//		for (Map<String,Object> map : list) {
-//			String series=SeqGetUtil.getSequence("corder","wm_bl_ship_dtl_series",tenantNumId.toString());
-//			int row=dynamicJdbcTemplate.update(sql,series,
-//					map.get("ZT_RESERVED_NO"),
-//					map.get("STK_NUM_ID"),
-//					map.get("DIV_NUM_ID"),
-//					map.get("BUD_NUM_ID"),
-//					map.get("SO_NUM_ID"),
-//					map.get("ITEM_NUM_ID"),
-//					map.get("QTY"),
-//					map.get("PICK_RESERVED_NO"),
-//					map.get("PICK_TASK_NUM_ID"),
-////					"501611140190285",
-//					map.get("TRAY_SERLNO"),
-//					map.get("ORDER_LINE"),
-//					map.get("PTY_INDEX_NUM_ID"),
-//					map.get("CREATE_USER_ID"),
-//					map.get("LAST_UPDATE_USER_ID"),
-//					map.get("CANCELSIGN"),
-//					map.get("INSERTDATA"),
-//					map.get("UPDATEDATA"),
-//					map.get("STK_CORT_NUM_ID"),
-//					map.get("CONTAINER_SERLNO"),
-//					map.get("PICK_LINE_ID"),
-//					map.get("LOC_NUM_ID"),
-//					map.get("LOC_PTY_NUM_ID"),
-//					map.get("PTY_INDEX_NUM_ID1"),
-//					map.get("BACKQTY"),
-//					map.get("VIRTUAL_FACT_QTY"),
-//					map.get("EXPORT_TO_BRANCH"),
-//					map.get("EXPORT_TO_BRANCH_BILL"),
-//					map.get("TML_LINE"),
-//					map.get("TML_NUM_ID"),
-//					map.get("EXPORT_TO_DRP"),
-//					map.get("DRP_BILLID"),
-//					map.get("STORAGE_NUM_ID"),
-//					map.get("DIFF_QTY"),
-//					map.get("SOURCE_LINE"),
-//					map.get("TRADE_PRICE"),
-//					map.get("ASN_LINE")
-//					);
-//			if (row<=0) {
-//				throw new DatabaseOperateException(Constant.SUB_SYSTEM, ExceptionType.DOE30051, "插入失败!");
-//			}
-//		}
-//
-//	}
 
 	/**
 	 *
@@ -522,7 +344,6 @@ public class CommonJsonQueryServiceImpl implements CommonJsonQueryService {
 				String sql = batchExcuteModel.getSql();
 				final List<Object[]> argList  = batchExcuteModel.getArgList();
 				final List<Object[]> noDataUpdateArgList   = batchExcuteModel.getNoDataUpdateArgList();
-				//log.debug("\n待执行sql语句:"+sql+"；\n 参数:"+JSONArray.fromObject(argList).toString());
 				if (StringUtil.isAllNullOrBlank(sql) || argList==null) {
 					continue;
 				}
@@ -532,7 +353,6 @@ public class CommonJsonQueryServiceImpl implements CommonJsonQueryService {
 					useBatch = false;
 				}
 				if(useBatch){
-//					dynamicJdbcTemplate.getDataSource().getConnection().setAutoCommit(false);
 					int arg[] = dynamicJdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 						@Override
 						public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {

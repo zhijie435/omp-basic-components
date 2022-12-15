@@ -1,7 +1,7 @@
 package com.gb.soa.omp.ccache.dao;
 
+import com.gb.soa.basic.config.SeqConfig;
 import com.gb.soa.omp.ccache.entity.EC_COMMON_CACHE_DEPENDENCE;
-import com.gb.soa.omp.ccache.util.SeqUtil;
 import com.gb.soa.omp.ccommon.api.exception.DatabaseOperateException;
 import com.gb.soa.omp.ccommon.api.exception.ExceptionType;
 import com.gb.soa.omp.ccommon.util.MyJdbcTemplate;
@@ -26,10 +26,10 @@ public class EcCommonCacheDependenceDao {
 
 	@Value("${db.annotate.prefix}")
 	private String dbAnnotatePrefix;
-	
+
     @Resource(name = "msgcenterJdbcTemplate")
     private MyJdbcTemplate msgcenterJdbcTemplate;
-  
+
 	//批量插入
 	public void batchInsertEntity(List<EC_COMMON_CACHE_DEPENDENCE> entityList) {
 		String sql = "insert into ec_common_cache_dependence(series,tenant_num_id,data_sign,method_name,db,cache_key,params,"+
@@ -44,7 +44,7 @@ public class EcCommonCacheDependenceDao {
 							throws SQLException {
 						EC_COMMON_CACHE_DEPENDENCE entity = entityList.get(i);
 						int index = 1;
-						entity.setSERIES(SeqUtil.getSeqNextValue(SeqUtil.EC_COMMON_CACHE_DEPENDENCE_SERIES));
+						entity.setSERIES(SeqConfig.getSeqNextValue(SeqConfig.EC_COMMON_CACHE_DEPENDENCE_SERIES));
 						ps.setString(index++, entity.getSERIES());
 						ps.setLong(index++, entity.getTENANT_NUM_ID());
 						ps.setLong(index++, entity.getDATA_SIGN());
@@ -63,7 +63,7 @@ public class EcCommonCacheDependenceDao {
 			throw new DatabaseOperateException(SUB_SYSTEM,ExceptionType.DOE30042,"批量插入缓存方法值关联表记录失败!");
 		}
 	}
-	
+
     public List<EC_COMMON_CACHE_DEPENDENCE> getCommonCacheDependenceByTableNameAndSeries(Long tenantNumId, Long dataSign,String db, String tableName, Long series) {
 		String sql = "select series,tenant_num_id,data_sign,method_name,db,cache_key,params,table_name,table_series,create_dtme,last_updtme,create_user_id,last_update_user_id,dubbo_group from ec_common_cache_dependence where data_sign=? and table_name=? and table_series=? and db=? ";
 		if (!tenantNumId.equals(0L)) {
@@ -99,7 +99,7 @@ public class EcCommonCacheDependenceDao {
 		List<String> series = msgcenterJdbcTemplate.queryForList(sql,new Object[]{tenantNumId,dataSign,cacheKey,methodName},String.class);
 		return series;
 	}
-	
+
 	/***
 	 * 删除所有数据
 	 * @param tenantNumId

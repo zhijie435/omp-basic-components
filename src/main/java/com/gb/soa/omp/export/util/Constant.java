@@ -6,8 +6,10 @@
  */
 package com.gb.soa.omp.export.util;
 
-public class Constant {
+import org.springframework.beans.factory.annotation.Value;
 
-	public static final String SUB_SYSTEM = "cexport";
+public class Constant {
+	@Value("${spring.application.name}")
+	public static final String SUB_SYSTEM = "";
 
 }

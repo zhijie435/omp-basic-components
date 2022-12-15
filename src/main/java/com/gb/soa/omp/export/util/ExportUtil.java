@@ -19,6 +19,7 @@ import com.gb.soa.sequence.util.SeqGetUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -30,8 +31,8 @@ import java.util.regex.Pattern;
  * @version <b>1.0.0</b>
  */
 public class ExportUtil {
-
-	public static final String SUB_SYSTEM = "cexport";
+	@Value("${spring.application.name}")
+	public static final String SUB_SYSTEM = "";
 
 	public static String sqlHandler(String sqlValue,
 			List<Map<String, Object>> returnParamMap, CommonQuery gq,
@@ -208,12 +209,11 @@ public class ExportUtil {
 
 		return paramMapList;
 	}
-
+	static Pattern pattern = Pattern.compile("[0-9]*");
 	/*
 	 * 判断是否为数
 	 */
 	public static boolean isNumeric(String str) {
-		Pattern pattern = Pattern.compile("[0-9]*");
 		return pattern.matcher(str).matches();
 	}
 

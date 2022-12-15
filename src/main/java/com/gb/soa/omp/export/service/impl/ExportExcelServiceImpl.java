@@ -7,6 +7,7 @@
 package com.gb.soa.omp.export.service.impl;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.gb.soa.basic.config.SeqConfig;
 import com.gb.soa.omp.ccommon.api.exception.BusinessException;
 import com.gb.soa.omp.ccommon.api.exception.ExceptionType;
 import com.gb.soa.omp.ccommon.datasource.DataSourceContextHolder;
@@ -137,7 +138,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
             for (int i = 0; i < excelDataList.size(); i++) {
                 ArrayList<String> list = excelDataList.get(i);
                 Object[] param = new Object[36];
-                param[0] = SeqUtil.getSeq(SeqUtil.EXCEL_INPUT_SERIES);
+                param[0] = SeqConfig.getSeq(SeqConfig.EXCEL_INPUT_SERIES);
                 param[1] = batchNo;
                 param[2] = sheetId;
                 param[3] = i + 1;
@@ -244,7 +245,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
             hdr.setIMPORT_ROWS(request.getImportRows());// '成功导入记录数',
             hdr.setFAIL_ROWS(request.getFailRows());// '失败记录数',
             hdr.setWARNING_ROWS(request.getWarningRows());// '警告记录数',
-            hdr.setSERIES(SeqUtil.getSeq(SeqUtil.EXCEL_INPUT_HDR_SERIES));
+            hdr.setSERIES(SeqConfig.getSeq(SeqConfig.EXCEL_INPUT_HDR_SERIES));
             hdr.setBATCH_NO(request.getBatchNo());
             hdr.setTENANT_NUM_ID(request.getTenantNumId());
             hdr.setDATA_SIGN(request.getDataSign());

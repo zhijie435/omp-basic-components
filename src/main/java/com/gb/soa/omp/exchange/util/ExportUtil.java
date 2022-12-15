@@ -24,15 +24,15 @@ import com.gb.soa.omp.exchange.model.CommonQuery;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
- * TODO（描述类的职责）
  * @author cjw
  * @date 2017年4月11日 下午3:41:13
  * @version <b>1.0.0</b>
  */
 public class ExportUtil {
-
-	public static final String SUB_SYSTEM = "cexport";
+	@Value("${spring.application.name}")
+	public static final String SUB_SYSTEM = "";
 
 }

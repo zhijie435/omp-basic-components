@@ -1,33 +1,34 @@
-package com.gb.soa.omp.export.util;
+package com.gb.soa.basic.config;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
-import org.springframework.context.annotation.Lazy;
+import com.gb.soa.omp.export.util.Constant;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.gb.soa.omp.ccommon.util.MyJdbcTemplate;
 import com.gb.soa.omp.ccommon.util.StringUtil;
 import com.gb.soa.sequence.util.SeqGetUtil;
 
 @Component()
-@Lazy(false)
+//@Lazy(false)
 @Scope("singleton")
-public class SeqUtil {
+public class SeqConfig implements ApplicationListener<ApplicationReadyEvent> {
     @Resource
     NacosConfigManager nacosConfigManager;
 
     public static volatile boolean recordSign = false;
 
-    @PostConstruct
-    public void init() {
-        if (StringUtil.isAllNotNullOrBlank(System.getProperty("record.log"))) {
-            recordSign = true;
-        }
-        SeqGetUtil.initeSequenceConfig(nacosConfigManager);
-    }
+//    @PostConstruct
+//    public void init() {
+//        System.out.println("序列号延迟加载");
+//        if (StringUtil.isAllNotNullOrBlank(System.getProperty("record.log"))) {
+//            recordSign = true;
+//        }
+//        SeqGetUtil.initeSequenceConfig(nacosConfigManager);
+//    }
 
     public static String getSeqNextValue(String SeqName, String routeId) {
         return SeqGetUtil.getSequence(Constant.SUB_SYSTEM, SeqName, routeId);
@@ -45,22 +46,23 @@ public class SeqUtil {
         return SeqGetUtil.getNoSubSequence(Constant.SUB_SYSTEM, SeqName);
     }
 
-    public static final String EXPORT_TENANT_TASK_BILL_SERIES = "export_tenant_task_bill_series";
-
-    public static final String EXPORT_TENANT_TASK_BATCH_SERIES = "export_tenant_task_batch_series";
-
-    public static final String EXPORT_TENANT_TASK_SERIES = "export_tenant_task_series";
-
-    public static final String EXCHANGE_TASK_CONFIG_CONTENT_SERIES = "exchange_task_config_content_series";
-
-    public static final String EXPORT_TENANT_NOTIFY_SERIES = "export_tenant_notify_series";
-
-    public static final String TENANT_TASK_NUM_ID = "tenant_task_num_id";
+    public static String getSeqNextValue(String seqName) {
+        return String.valueOf(SeqGetUtil.getNoSubSequence(com.gb.soa.omp.ccache.util.Constant.SUB_SYSTEM, seqName));
+    }
 
     public static final String EXCEL_INPUT_SERIES = "excel_input_series";
 
     public static final String EXCEL_INPUT_HDR_SERIES = "excel_input_hdr_series";
 
-    public static final String EXPORT_RECORD_LOG_SERIES = "export_record_log_series";
+    public static final String EC_COMMON_CACHE_DEPENDENCE_SERIES = "ec_common_cache_dependence_series";
 
+
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
+        System.out.println("序列号延迟加载");
+        if (StringUtil.isAllNotNullOrBlank(System.getProperty("record.log"))) {
+            recordSign = true;
+        }
+        SeqGetUtil.initeSequenceConfig(nacosConfigManager);
+    }
 }
