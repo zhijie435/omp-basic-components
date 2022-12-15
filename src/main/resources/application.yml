@@ -40,10 +40,15 @@ spring:
       logAbandoned: true
       driver-class-name: com.mysql.jdbc.Driver
       validationQuery: SELECT 'x'
+#      platform:
+#        url: ${spring.datasource.platform.url}
+#        username: ${spring.datasource.platform.username}
+#        password: ${spring.datasource.platform.password}
+      #数据源转移，测试先在这
       platform:
-        url: ${spring.datasource.platform.url}
-        username: ${spring.datasource.platform.username}
-        password: ${spring.datasource.platform.password}
+        url: jdbc:mysql://172.17.16.12:3306/standard-erp-platform?useUnicode=true&autoReconnect=true&autoReconnectForPools=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+        username: admin1
+        password: a6QGtAnU1jo9
       commondossier:
         url: ${spring.datasource.commondossier.url}
         username: ${spring.datasource.commondossier.username}
