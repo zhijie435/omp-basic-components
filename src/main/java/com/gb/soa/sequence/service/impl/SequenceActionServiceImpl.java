@@ -11,16 +11,13 @@ import com.gb.soa.sequence.model.PlatformOfflineSequence;
 import com.gb.soa.sequence.model.PlatformOfflineSubUnitSequence;
 import com.gb.soa.sequence.service.SequenceActionService;
 import com.gb.soa.sequence.service.SequenceTimeService;
-import com.gb.soa.sequence.util.Constant;
+import com.gb.soa.sequence.util.SeqConstant;
 import com.gb.soa.sequence.util.DateUtils;
-import com.ykcloud.soa.mapping.GatewayMapping;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
@@ -145,7 +142,7 @@ public class SequenceActionServiceImpl implements SequenceActionService {
             String lockKey = seqName + "_common";
             boolean belongCalendar = belongCalendar("common");
             if (belongCalendar) {
-                lockKey = Constant.UPDATE_JOB_LOCK;
+                lockKey = SeqConstant.UPDATE_JOB_LOCK;
             }
             lock = new RedisLock(stringRedisTemplate, lockKey, 10, 30, 30);
             if (!lock.tryLock()) {
@@ -266,7 +263,7 @@ public class SequenceActionServiceImpl implements SequenceActionService {
         String lockKey = seqName + "_auto";
         boolean belongCalendar = belongCalendar("auto");
         if (belongCalendar) {
-            lockKey = Constant.SEQUENCE_AUTO_CLEAR;
+            lockKey = SeqConstant.SEQUENCE_AUTO_CLEAR;
         }
         try {
             // redis实例,锁名字,过期时间(单位秒),重试次数,等待时间(单位毫秒)

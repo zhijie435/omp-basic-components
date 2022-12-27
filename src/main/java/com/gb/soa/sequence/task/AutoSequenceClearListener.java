@@ -3,7 +3,7 @@ package com.gb.soa.sequence.task;
 import com.gb.soa.omp.ccommon.util.RedisLock;
 import com.gb.soa.sequence.dao.AutoSequenceDao;
 import com.gb.soa.sequence.model.AtuoSeqClearModel;
-import com.gb.soa.sequence.util.Constant;
+import com.gb.soa.sequence.util.SeqConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class AutoSequenceClearListener {
 		List<AtuoSeqClearModel> clearAutoSeqList = null;
 		RedisLock lock = null;
 		Boolean weatherLock = true;
-		String lockKey = Constant.SEQUENCE_AUTO_CLEAR;
+		String lockKey = SeqConstant.SEQUENCE_AUTO_CLEAR;
 		String existKey = "auto_clear_exist";// 自增序列已经更新过
 		try {
 			lock = new RedisLock(stringRedisTemplate, lockKey, 100, 30, 10);

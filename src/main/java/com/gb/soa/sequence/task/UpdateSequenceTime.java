@@ -5,7 +5,7 @@ import com.gb.soa.omp.ccommon.util.RedisLock;
 import com.gb.soa.sequence.dao.SequenceDAO;
 import com.gb.soa.sequence.model.CreateSequence;
 import com.gb.soa.sequence.service.SequenceTimeService;
-import com.gb.soa.sequence.util.Constant;
+import com.gb.soa.sequence.util.SeqConstant;
 import org.apache.http.client.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,7 @@ public class UpdateSequenceTime {
 
 	public void updateSequenceTime() {
 		RedisLock lock = null;
-		String lockKey = Constant.UPDATE_JOB_LOCK;
+		String lockKey = SeqConstant.UPDATE_JOB_LOCK;
 		try {
 			lock = new RedisLock(stringRedisTemplate, lockKey, 100, 30, 10);
 			if (!lock.tryLock()) {
