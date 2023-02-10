@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 import java.beans.Introspector;
+import java.text.SimpleDateFormat;
 
 @ImportResource(locations = {"classpath:application_dubbo.xml", "classpath:spring-quartz.xml"})
 @Configuration
@@ -31,6 +32,7 @@ public class BasicComponentsMain {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         jsonConverter.setObjectMapper(objectMapper);
         return jsonConverter;
     }
