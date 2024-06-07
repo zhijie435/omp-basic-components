@@ -1,4 +1,4 @@
-image: harbor01.yiako.com/tools/docker:latest
+image: harbor01.xxx.com/tools/docker:latest
 cache:
   key: $CI_BUILD_REF
   paths:
