@@ -11,7 +11,7 @@ stages:
   - deploy
 
 mvn_build_job:
-  image: harbor01.yiako.com/tools/maven:3.3.9-jdk-8-alpine
+  image: harbor01.xxx.com/tools/maven:3.3.9-jdk-8-alpine
 
   stage: package
   tags:
