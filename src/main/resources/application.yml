@@ -40,55 +40,6 @@ spring:
       logAbandoned: true
       driver-class-name: com.mysql.jdbc.Driver
       validationQuery: SELECT 'x'
-#      platform:
-#        url: ${spring.datasource.platform.url}
-#        username: ${spring.datasource.platform.username}
-#        password: ${spring.datasource.platform.password}
-      #数据源转移，测试先在这
-      platform:
-        url: jdbc:mysql://172.17.16.12:3306/standard-erp-platform?useUnicode=true&autoReconnect=true&autoReconnectForPools=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
-        username: admin1
-        password: a6QGtAnU1jo9
-      commondossier:
-        url: ${spring.datasource.commondossier.url}
-        username: ${spring.datasource.commondossier.username}
-        password: ${spring.datasource.commondossier.password}
-      tenantdoss:
-        url: ${spring.datasource.tenantdoss.url}
-        username: ${spring.datasource.tenantdoss.username}
-        password: ${spring.datasource.tenantdoss.password}
-      msgcenter:
-        url: ${spring.datasource.msgcenter.url}
-        username: ${spring.datasource.msgcenter.username}
-        password: ${spring.datasource.msgcenter.password}
-      tenanstor:
-        url: ${spring.datasource.tenanstor.url}
-        username: ${spring.datasource.tenanstor.username}
-        password: ${spring.datasource.tenanstor.password}
-      dataexchange:
-        url: ${spring.datasource.dataexchange.url}
-        username: ${spring.datasource.dataexchange.username}
-        password: ${spring.datasource.dataexchange.password}
-      tenanord:
-        url: ${spring.datasource.tenanord.url}
-        username: ${spring.datasource.tenanord.username}
-        password: ${spring.datasource.tenanord.password}
-      mdm:
-        url: ${spring.datasource.mdm.url}
-        username: ${spring.datasource.mdm.username}
-        password: ${spring.datasource.mdm.password}
-      finance:
-        url: ${spring.datasource.finance.url}
-        username: ${spring.datasource.finance.username}
-        password: ${spring.datasource.finance.password}
-      logistics:
-        url: ${spring.datasource.logistics.url}
-        username: ${spring.datasource.logistics.username}
-        password: ${spring.datasource.logistics.password}
-      supplychain:
-        url: ${spring.datasource.supplychain.url}
-        username: ${spring.datasource.supplychain.username}
-        password: ${spring.datasource.supplychain.password}
       filter:
         stat:
           logSlowSql: true
@@ -116,23 +67,6 @@ redis:
 
 restTemplateConnectTimeout: 10000
 restTemplateReadTimeout: 10000
-
-creditTmlExpireHour: 24
-db.annotate.prefix: /*#mycat:db_type=master*/
-
-rpc.invoke-type: dubbo
-
-excel.host: http://portal.yiako.com/excel/download/
-excel.path: ${excel.path}
-#存储桶 根目录
-minio.excel.bucketName: ${minio.excel.bucketName}
-#minio子目录
-excel.child.path: ${excel.child.path}
-#minio客户端
-minio.intranet.endpoint: ${minio.intranet.endpoint}
-minio.extranet.endpoint: ${minio.extranet.endpoint}
-minio.accesskey: ${minio.accesskey}
-minio.secretkey: ${minio.secretkey}
 
 # 分页大小
 sync.batch.size: 500
